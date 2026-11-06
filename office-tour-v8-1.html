@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HIKKE AI LABO | 仮想本社 Ver.8.1 室内ツアー</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#edf7ff;background:#04132d}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 90% 0%,#1258a5 0%,#04132d 52%);min-height:100vh}header{padding:18px 5%;border-bottom:1px solid #39bfff;background:#061d41}h1{font-size:clamp(19px,4vw,30px);margin:0}small{color:#7de6ff}.wrap{max-width:1150px;margin:auto;padding:24px 4%}.intro{color:#b4d7f3}.floors{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.floor,.room,.nav button{font:inherit;cursor:pointer;color:white;border:1px solid #4cb9ff;background:#082953;border-radius:12px}.floor{padding:12px 18px}.floor.active,.room.active{background:#075b9d;border-color:#75e9ff;box-shadow:0 0 12px #00bfff77}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.room{padding:16px;text-align:left;min-height:90px}.room:focus-visible,.floor:focus-visible,.nav button:focus-visible{outline:3px solid #fff;outline-offset:2px}.num{color:#7de6ff;font-weight:800;margin-right:8px}.room p{font-size:13px;color:#b7d5ea;margin:8px 0 0}.viewer{margin-top:22px;border:1px solid #4bcaff;border-radius:18px;overflow:hidden;background:#071e3e;box-shadow:0 0 22px #0077aa55;scroll-margin-top:15px}.viewer-head{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;gap:10px}.viewer h2{margin:0;font-size:20px}.viewer img{width:100%;aspect-ratio:16/9;object-fit:contain;background:#031126;display:block;max-height:75vh}.detail{padding:16px 20px;color:#c9e7fa}.nav{display:flex;gap:10px;padding:0 20px 18px}.nav button{flex:1;padding:12px}.notice{color:#a3c7e2;font-size:13px;margin-top:22px;line-height:1.7}footer{text-align:center;padding:24px;color:#7da6ca}@media(max-width:720px){.grid{grid-template-columns:1fr}.room{min-height:0;padding:13px 15px}.viewer h2{font-size:17px}.wrap{padding:18px 4%}.floor{flex:1;padding:12px 8px;font-size:14px}}
+.staff-area{padding:0 20px 20px}.staff-title{font-size:16px;color:#8feaff;margin:0 0 12px}.staff-card{display:flex;align-items:center;gap:14px;padding:15px;border:1px solid #397cb0;background:#092e52;border-radius:14px}.staff-avatar{width:88px;height:88px;border-radius:14px;object-fit:cover;object-position:center 24%;background:#13527c;flex:none}.mascot{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:12px;border:1px solid #347ab0;border-radius:14px;background:#09294d}.mascot img{width:66px;height:66px;border-radius:12px;object-fit:cover}.mascot strong{color:#8feaff}.mascot p{margin:4px 0 0;color:#c1dff1;font-size:13px}.staff-card{align-items:flex-start}.staff-info strong{font-size:17px}.staff-info p{color:#bad9ed;margin:5px 0 0;font-size:14px;line-height:1.6}.staff-empty{color:#91b7d0;font-size:14px}.staff-note{font-size:12px;color:#91b7d0;margin-top:8px}
+</style>
+</head>
+<body>
+<header><h1>♞ HIKKE AI LABO <small>仮想本社 Ver.8.1</small></h1></header>
+<main class="wrap">
+<p class="intro">フロアを選び、部屋名をタップすると完成した室内を見学できます。</p><div class="mascot"><img src="mascot-hikkya.jpg" alt="公式マスコット ヒッキャ"><div><strong>ヒッキャのオフィス案内</strong><p>ようこそ！9部屋を見学して、AIスタッフに会いに行こう。</p></div></div>
+<div class="floors" id="floors" aria-label="フロア選択"></div>
+<div class="grid" id="rooms" aria-label="部屋選択"></div>
+<section class="viewer" id="viewer" aria-live="polite">
+<div class="viewer-head"><h2 id="roomTitle"></h2><span id="floorTag"></span></div>
+<img id="big" alt="選択した部屋の室内イメージ">
+<div class="detail" id="detail"></div>
+<div class="staff-area" id="staffArea" aria-label="担当AIスタッフ"></div>
+<div class="nav"><button id="prev">← 前の部屋</button><button id="next">次の部屋 →</button></div>
+</section>
+<p class="notice">※ AIスタッフの担当部署は仮配置です。プロフィール画像は公式集合写真から切り出したものです。現在アップロード済みの受付画像は「room-01.jpg .PNG」を読み込みます。残りの画像は「room-02.jpg」～「room-09.jpg」を同じフォルダに置く設定です。未登録画像は案内表示に切り替わります。これは写真による室内ツアーで、360°ビューではありません。</p>
+</main><footer>HIKKE AI LABO © 2026</footer>
+<script>
+const data=[
+{n:1,f:1,t:'受付・ラウンジ',d:'来訪者を迎える、白とシアンブルーを基調としたエントランス。'},
+{n:2,f:1,t:'品質管理室',d:'公開前の文章・画像・リンクなどをチェックする品質管理エリア。'},
+{n:3,f:1,t:'販売管理室',d:'営業状況やプロジェクト進捗を管理するオフィス。'},
+{n:4,f:2,t:'リサーチ室',d:'調査・比較・情報収集に集中する個室型リサーチエリア。'},
+{n:5,f:2,t:'SNS運用室',d:'SNSの企画、制作、投稿管理を行うクリエイティブな空間。'},
+{n:6,f:2,t:'データ分析室',d:'分析結果や指標を可視化し、改善案を検討するエリア。'},
+{n:7,f:3,t:'企画会議室',d:'新しいアイデアや制作計画を話し合う会議スペース。'},
+{n:8,f:3,t:'記事制作室',d:'記事・画像・動画などのコンテンツ制作に取り組む部屋。'},
+{n:9,f:3,t:'社長室',d:'黒を基調に青い照明を配した、落ち着いたラグジュアリー空間。'}
+];
+const staff={
+1:{name:'陽葵（ひまり）',photo:'staff-himari.jpg',role:'受付・社内サポート',task:'来訪者への案内と、社内業務のサポートを担当。'},
+2:{name:'瑠夏（るか）',photo:'staff-ruka.jpg',role:'品質管理担当',task:'公開前の文章・画像・リンクを確認し、品質向上を支援。'},
+5:{name:'心愛（ここあ）',photo:'staff-kokoa.jpg',role:'SNS運用・広報担当',task:'SNS投稿の企画、発信内容の作成、広報活動を担当。'}
+};
+let floor=1,selected=1;
+const $=id=>document.getElementById(id);
+const file=n=>n===1?'room-01.jpg .PNG':'room-'+String(n).padStart(2,'0')+'.jpg';
+function fallback(img,n){img.onerror=null;const title=data[n-1].t;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720"><rect width="1280" height="720" fill="#08284e"/><text x="640" y="315" text-anchor="middle" fill="#6be5ff" font-size="54" font-family="sans-serif">HIKKE AI LABO</text><text x="640" y="410" text-anchor="middle" fill="white" font-size="42" font-family="sans-serif">${title}</text><text x="640" y="480" text-anchor="middle" fill="#9cc" font-size="26" font-family="sans-serif">画像アップロード待ち</text></svg>`)}
+function render(){
+$('floors').innerHTML=[1,2,3].map(f=>`<button class="floor ${f===floor?'active':''}" data-f="${f}" aria-pressed="${f===floor}">${f}F　${['','受付・管理','運用・分析','企画・制作'][f]}</button>`).join('');
+$('floors').querySelectorAll('button').forEach(b=>b.onclick=()=>{floor=+b.dataset.f;selected=data.find(x=>x.f===floor).n;render()});
+$('rooms').innerHTML=data.filter(x=>x.f===floor).map(x=>`<button class="room ${x.n===selected?'active':''}" data-n="${x.n}" aria-pressed="${x.n===selected}"><strong><span class="num">${String(x.n).padStart(2,'0')}</span>${x.t}</strong><p>${x.d}</p></button>`).join('');
+$('rooms').querySelectorAll('button').forEach(b=>b.onclick=()=>{selected=+b.dataset.n;render();$('viewer').scrollIntoView({behavior:'smooth',block:'start'})});
+show();
+}
+function show(){const x=data[selected-1];$('roomTitle').textContent=`${x.n}. ${x.t}`;$('floorTag').textContent=x.f+'F';$('detail').textContent=x.d;
+const person=staff[x.n];
+$('staffArea').innerHTML=person?`<h3 class="staff-title">担当AIスタッフ</h3><div class="staff-card"><img class="staff-avatar" src="${person.photo}" alt="${person.name}の公式写真"><div class="staff-info"><strong>${person.name}</strong><p>${person.role}</p><p>${person.task}</p></div></div><p class="staff-note">※ 担当部署は仮配置。写真は公式集合画像から切り出しています。</p>`:'<h3 class="staff-title">担当AIスタッフ</h3><p class="staff-empty">この部屋の担当者は今後追加予定です。</p>';
+const img=$('big');img.onerror=()=>fallback(img,x.n);img.alt=x.t+'の室内イメージ';img.src=file(x.n)}
+$('prev').onclick=()=>{selected=selected===1?9:selected-1;floor=data[selected-1].f;render()};
+$('next').onclick=()=>{selected=selected===9?1:selected+1;floor=data[selected-1].f;render()};
+render();
+</script>
+</body></html>
